@@ -1,0 +1,27 @@
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: pontomais_rabbitmq
+    ports:
+      - '5672:5672' # Porta para conexão do AMQP (protocolo do RabbitMQ)
+      - '15672:15672' # Porta para o painel de gerenciamento web
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  postgres:
+    image: postgres:latest
+    container_name: pontomais_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pontomais
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
